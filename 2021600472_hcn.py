@@ -12,15 +12,15 @@ class HinhHopChuNhat:
     def tinh_the_tich(self):
         return self.chieu_dai * self.chieu_rong * self.do_cao
 ds_hinh_hop_chu_nhat = []
-def nhap_hinh_hop_chu_nhat():
-    n = int(input("Nhập số lượng hình hộp chữ nhật: "))
-    for i in range(n):
-        chieu_dai = float(input("Nhập chiều dài của hình {}: ".format(i+1)))
-        chieu_rong = float(input("Nhập chiều rộng của hình {}: ".format(i+1)))
-        do_cao = float(input("Nhập độ cao của hình {}: ".format(i+1)))
-        hinh_hop_chu_nhat = HinhHopChuNhat(chieu_dai, chieu_rong, do_cao)
-        ds_hinh_hop_chu_nhat.append(hinh_hop_chu_nhat)
-    return ds_hinh_hop_chu_nhat
+# def nhap_hinh_hop_chu_nhat():
+#     n = int(input("Nhập số lượng hình hộp chữ nhật: "))
+#     for i in range(n):
+#         chieu_dai = float(input("Nhập chiều dài của hình {}: ".format(i+1)))
+#         chieu_rong = float(input("Nhập chiều rộng của hình {}: ".format(i+1)))
+#         do_cao = float(input("Nhập độ cao của hình {}: ".format(i+1)))
+#         hinh_hop_chu_nhat = HinhHopChuNhat(chieu_dai, chieu_rong, do_cao)
+#         ds_hinh_hop_chu_nhat.append(hinh_hop_chu_nhat)
+#     return ds_hinh_hop_chu_nhat
 
 def in_danh_sach_hinh_hop_chu_nhat(ds_hinh_hop_chu_nhat):
     Label(root,text="Danh sach hinmh chu nhat: ").pack()
