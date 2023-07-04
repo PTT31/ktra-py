@@ -16,92 +16,83 @@ class Ga:
         else:
             return 0
 
-danh_sach_ga = []
+ds_ga = []
 
 def nhap_danh_sach_ga():
     n = int(entry1.get())
     var = IntVar()
     def add():
-        try:
-            ga = Ga(entry2.get(), int(entry3.get()), entry4.get())
-            danh_sach_ga.append(ga)
-            print(entry3.get())
-            var.set(1)
-        except:
-            print('Nhap lai!')
-    button5.config(command=add,state=NORMAL)
-    button5.pack()
+        ds_ga.append(Ga(entry2.get(), int(entry3.get()), entry4.get()))
+        var.set(1)
+    button6.configure(command=add)
     for i in range(n):
         nf = Frame(root)
-        
-        
-
-        label2 = Label(nf, text="Loại gà:")
+        label2 = Label(nf, text="Nhập loại gà {}: ".format(i+1))
         label2.pack()
         entry2 = Entry(nf)
         entry2.pack()
-
-        label3 = Label(nf, text="Tuổi gà:")
+        label3 = Label(nf, text="Nhập tuổi gà {}: ".format(i+1))
         label3.pack()
         entry3 = Entry(nf)
         entry3.pack()
-
-        label4 = Label(nf, text="Giới tính:")
+        label4 = Label(nf, text="Nhập giới tính gà {}: ".format(i+1))
         label4.pack()
         entry4 = Entry(nf)
         entry4.pack()
         nf.pack()
-        loai = entry2.get()
-        tuoi = entry3.get()
-
-        gioi_tinh = entry4.get()
-        button5.wait_variable(var)
+        button6.wait_variable(var)
         nf.destroy()
-        
+
+    button1.config(state=DISABLED)
+    entry1.config(state=DISABLED)
     button2.config(state=NORMAL)
     button3.config(state=NORMAL)
     button4.config(state=NORMAL)
+    button5.config(state=NORMAL)
+    button6.config(state=DISABLED)
 
 def in_danh_sach_ga():
-    text_box.delete("1.0", END)
-    text_box.insert(END, "Danh sách gà:\n")
-    for i, ga in enumerate(danh_sach_ga):
-        text_box.insert(END, "Gà {}: Loại = {}, Tuổi = {}, Giới tính = {}\n".format(i+1, ga.loai, ga.tuoi, ga.gioi_tinh))
+    Label(root, text="Danh sách gà: ").pack()
+    for i, ga in enumerate(ds_ga):
+        label = Label(root, text="Gà {}: Loại = {}, Tuổi = {}, Giới tính = {}".format(i+1, ga.loai, ga.tuoi, ga.gioi_tinh))
+        label.pack()
 
 def tinh_tong_so_trung():
-    tong_so_trung = sum(ga.tinh_so_trung() for ga in danh_sach_ga)
-    text_box.insert(END, "Tổng số trứng đàn gà đã đẻ là: {}\n".format(tong_so_trung))
+    tong_so_trung = sum(ga.tinh_so_trung() for ga in ds_ga)
+    label = Label(root, text="Tổng số trứng đàn gà đã đẻ: {}".format(tong_so_trung))
+    label.pack()
 
-def dem_ga_trong_ri():
-    dem_ga_trong_ri = sum(1 for ga in danh_sach_ga if ga.loai == "Gà ri" and ga.gioi_tinh == "Gà trống")
-    dem_trung_ga_ri = sum(ga.tinh_so_trung() for ga in danh_sach_ga if ga.loai == "Gà ri" and ga.gioi_tinh == "Gà trống")
-    text_box.insert(END, "Số lượng gà trống ri là: {}\n".format(dem_ga_trong_ri))
-    text_box.insert(END, "Số quả trứng gà ri là: {}\n".format(dem_trung_ga_ri))
+def dem_ga_trong_ri_va_so_trung_ga_ri():
+    dem_ga_trong_ri = 0
+    so_trung_ga_ri = 0
+    for ga in ds_ga:
+        if ga.loai == "gà ri":
+            dem_ga_trong_ri += 1
+            so_trung_ga_ri += ga.tinh_so_trung()
+    label1 = Label(root, text="Số con gà trống ri: {}".format(dem_ga_trong_ri))
+    label1.pack()
+    label2 = Label(root, text="Số trứng gà ri: {}".format(so_trung_ga_ri))
+    label2.pack()
 
 root = Tk()
-root.title("Quản lý con gà")
+root.title("Quản lý gà")
 root.geometry("400x400")
-label1 = Label(root, text="Nhập số lượng con gà:")
+
+label1 = Label(root, text="Nhập số lượng gà:")
 label1.pack()
 entry1 = Entry(root)
 entry1.pack()
-button1 = Button(root, text="Nhập danh sách", command=nhap_danh_sach_ga)
+button1 = Button(root, text="Tạo danh sách", command=nhap_danh_sach_ga)
 button1.pack()
-
 button2 = Button(root, text="In danh sách", state=DISABLED, command=in_danh_sach_ga)
 button2.pack()
-
 button3 = Button(root, text="Tính tổng số trứng", state=DISABLED, command=tinh_tong_so_trung)
 button3.pack()
-
-button4 = Button(root, text="Đếm gà trống ri", state=DISABLED, command=dem_ga_trong_ri)
+button4 = Button(root, text="Đếm gà trống ri và số trứng gà ri", state=DISABLED, command=dem_ga_trong_ri_va_so_trung_ga_ri)
 button4.pack()
-
-button5 = Button(root,text='Nhap',state=DISABLED)
+button5 = Button(root, text="Thoát", command=root.quit)
 button5.pack()
-
-
-text_box = Text(root, height=10, width=40)
-text_box.pack()
+button6 = Button(root, text="Nhập")
+button6.pack()
 
 root.mainloop()
