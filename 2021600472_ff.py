@@ -1,5 +1,5 @@
 from tkinter import *
-
+import  math
 class BoDem:
     def __init__(self, ten, Kd, loai):
         self.ten = ten
@@ -7,17 +7,7 @@ class BoDem:
         self.loai = loai
 
     def tinh_so_FF(self):
-        if self.loai == "JKFF":
-            return 2
-        elif self.loai == "RSFF":
-            return 2
-        elif self.loai == "DFF":
-            return 1
-        elif self.loai == "TFF":
-            return 1
-        else:
-            return 0
-
+        return math.ceil(math.log(self.Kd))
 def nhap_danh_sach_bo_dem():
     n = int(entry1.get())
     var = IntVar()
@@ -55,7 +45,7 @@ def in_danh_sach_JKFF():
     Label(root, text="Danh sách bộ đếm từ JKFF:").pack()
     for i, bd in enumerate(ds_bo_dem):
         if bd.loai == "JKFF":
-            label = Label(root, text="Bộ đếm {}: Tên = {}, Kđ = {}, Loại = {}".format(i+1, bd.ten, bd.Kd, bd.loai))
+            label = Label(root, text="Bộ đếm {}: Tên = {}, Kđ = {}, Loại = {}, Số FF: {}".format(i+1, bd.ten, bd.Kd, bd.loai,bd.tinh_so_FF()))
             label.pack()
 
 def sap_xep_danh_sach_giam_Kd():
